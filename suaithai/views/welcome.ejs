@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include("head.ejs") %>
+</head>
+<body>
+   <%- include("header.ejs") %>
+   <main class="grid grid-cols-1 gap-[5rem] p-[3rem] sm:p-[5rem] xl:grid-cols-2">
+      <figure>
+         <img src="./images/<%= content.content.introduceImage %>" class="rounded-2xl w-full h-[20rem] shadow-lg shadow-slate-400 object-center object-cover sm:h-[40rem] xl:h-auto">
+         <figcaption class="mt-[2rem] text-center text-[2.5rem] text-red-500">Keine Erotik !!!</figcaption>
+      </figure>
+      <article class="text-rose-950">
+         <header class="text-[2.5rem] mb-[2rem]">Sawasdee</header>
+         <p class="text-[1.2rem] font-thin"><%- content.content.introduceText %></p>
+      </article>
+   </main>
+   <%- include("footer.ejs") %>
+   <script src="script.js"></script>
+   <script src="page.js"></script>
+</body>
+</html>

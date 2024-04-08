@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include("head.ejs") %>
+</head>
+<body>
+   <%- include("header.ejs") %>
+      <main class="font-thin text-rose-950 p-[3rem] sm:p-[5rem]">
+         <% content.forEach((massage, index)=>{ %>
+            <article class="flex flex-col-reverse gap-[5rem] mb-[5rem] xl:*:w-[50%] xl:flex-row xl:even:flex-row-reverse">
+               <main class="">
+                  <header class="text-[2.4rem] text-center mb-[0.5rem]">
+                     <%= massage.name %>
+                  </header>
+                  <article class="text-[1.2rem]">
+                     <%- massage.detail %>
+                  </article>
+                  <ul type="none" class="flex flex-row 
+                     <% if(index % 2 == 0){ %>
+                        justify-end
+                     <% }else{ %>
+                        justify-start
+                     <% } %>
+                      pt-[1rem] gap-x-[1rem]">
+                     <% massage.package.forEach((package)=>{ %>
+                        <li class="flex flex-col">
+                           <span class="font-normal">
+                              <%= package.min %>
+                           </span>
+                           <span class="px-0.5rem py-[0.2rem] bg-rose-900 text-white rounded-full text-center shadow-lg" style="text-shadow:0 1px 3px white;">
+                              <%= package.price %>
+                           </span>
+                        </li>
+                        <% }) %>
+                     </ul>
+                  </main>
+                  <img src="/images/<%= massage.image %>" class="h-[20rem] shadow-xl object-cover object-center">
+            </article>
+         <% }) %>
+      </main>
+   <%- include("footer.ejs") %>
+      <script src="script.js"></script>
+      <script src="page.js"></script>
+</body>
+</html>

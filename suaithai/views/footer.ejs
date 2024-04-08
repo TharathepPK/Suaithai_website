@@ -1,0 +1,32 @@
+<footer class="p-[3rem] sm:p-[5rem] bg-rose-950 text-white flex flex-col gap-[5rem] lg:flex-row">
+   <article>
+      <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Kontakt | Impressum</header>
+      <p class="leading-[1.5rem]">
+         <% contacts.forEach((contact)=>{ %>
+            <% if(typeof contact.value == "string"){ %>
+               <%= contact.contact %>: <%= contact.value %><br>
+            <% }else{ %>
+               <%= contact.contact %>: <a href="<%= contact.value.link %>" class="underline underline-offset-2 cursor-pointer"><%= contact.value.name %></a><br>
+            <% } %>
+         <% }) %>
+      </p>
+   </article>
+   <article>
+      <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Unsere Öffnungszeiten</header>
+      <p class="leading-[1.5rem]">
+         Termine nur nach Vereinbarung! <br>
+         <section class="inline-grid grid-cols-2 gap-x-[2rem]">
+            <ul>
+               <% days.forEach((day)=>{ %>
+                  <li><%= day.day %><li>
+               <% }) %>
+            </ul>
+            <ul>
+               <% days.forEach((day)=>{ %>
+                  <li><%= day.time %></li>
+               <% }) %>
+            </ul>
+         </section>
+      </p>
+   </article>
+</footer>

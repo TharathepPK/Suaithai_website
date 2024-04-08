@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+   html{
+      font-size: calc(60% + 0.8vmin);
+   }
+   *{
+      @apply cursor-default;
+   }
+   body{
+      @apply font-apple overflow-x-hidden;
+   }
+   .bubble{
+      @apply absolute rounded-full size-[5rem] bg-amber-100 opacity-[0.2];
+   }
+   .stand{
+      @apply relative hover:after:w-[60%] after:content-[""] after:absolute after:-bottom-[0.8rem] 
+         after:left-[50%] after:-translate-x-[50%] after:w-[1rem] after:h-[0.1rem] 
+         after:bg-rose-800 after:opacity-[50%] after:rounded-full after:transition-all 
+         after:duration-[0.5s]; 
+   }
+   .ham-stand{
+      @apply relative hover:after:w-[60%] after:content-[""] after:absolute after:-bottom-[0.8rem] 
+         after:left-[0] after:w-[1rem] after:h-[0.1rem] 
+         after:bg-rose-800 after:opacity-[50%] after:rounded-full after:transition-all 
+         after:duration-[0.5s]; 
+   }
+   input:focus,
+   textarea:focus{
+      @apply px-[0.5rem] outline-rose-800 rounded-lg transition-all duration-[0.5s];
+   }
+   .images-col{
+      @apply w-full flex flex-col gap-y-[0.5rem] sm:w-[50%] lg:w-[33.33%]
+   }
+   input[type="file"],a,button,svg,path{
+      @apply cursor-pointer
+   }
+}

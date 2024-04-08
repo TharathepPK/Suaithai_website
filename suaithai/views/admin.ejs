@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Admin</title>
+   <%- include("head.ejs") %>
+</head>
+
+<body class="text-rose-950">
+   <!-- header -->
+   <header class="w-screen h-screen overflow-hidden relative">
+      <form method="post" action="/header-bg-save" enctype="multipart/form-data" id="change-background-btn"
+         class="p-[1.5rem] bg-gray-100 rounded-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] transition-all duration-[0.2s] z-[2] overflow-hidden">
+         <input type="file" name="image" class="opacity-[0] absolute top-0 left-0 text-[10rem]"
+            onchange="this.form.submit()">
+         <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="hsl(350,40%,30%)"
+            class="bi bi-brush-fill" viewBox="0 0 16 16">
+            <path
+               d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.1 6.1 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.1 8.1 0 0 1-3.078.132 4 4 0 0 1-.562-.135 1.4 1.4 0 0 1-.466-.247.7.7 0 0 1-.204-.288.62.62 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896q.19.012.348.048c.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04" />
+         </svg>
+      </form>
+      <figure class="absolute size-full">
+         <img src="./images/<%= background %>" id="header-background"
+            class="size-full object-cover object-center transition-all duration-[0.1s]">
+      </figure>
+      <section
+         class="absolute flex flex-col items-center z-[1] size-fit right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] xl:translate-x-[0%] xl:right-[10%]">
+         <img src="./images/suai-logo.png" class=" h-[12rem]">
+         <p class="text-white text-[1.6rem] font-thin">Thai Massage & Spa</p>
+      </section>
+      <section class="absolute size-full z-[1]">
+         <img src="./images/cloud-top.png" id="cloud-top" class="absolute w-full h-[10rem] object-cover top-0">
+         <img src="./images/cloud-bottom.png" id="cloud-bottom"
+            class="absolute w-full h-[15rem] object-cover object-left bottom-0 lg:h-[10rem] lg:min-w-[100%] lg:object-fill">
+      </section>
+      <section id="bubble" class=" absolute size-full">
+      </section>
+      <nav id="header-nav"
+         class="absolute top-[2.5rem] w-full hidden flex-row justify-around z-[2] text-rose-900 text-[1rem] tracking-[0.3rem] lg:flex">
+         <a>Willkommen</a>
+         <a>Massagen & Preise</a>
+         <a>Gutscheine & Rabatt</a>
+         <a>GALERIE</a>
+      </nav>
+      <nav id="fixed-nav"
+         class="fixed -top-[100%] w-full py-[1.5rem] px-[5%] hidden flex-row justify-between items-center bg-white border-b-rose-800 border-b-[0.1rem] rounded-b-xl text-rose-900 tracking-[0.1rem] transition-all duration-[0.5s] z-[3] lg:flex xl:tracking-[0.3rem]">
+         <a>Willkommen</a>
+         <a>Massagen & Preise</a>
+         <a>Gutscheine & Rabatt</a>
+         <a>GALERIE</a>
+         <!-- fixed contact -->
+         <button id="fixed-contact-btn"
+            class="px-[0.6rem] py-[0.2rem] rounded-xl border-white border-[0.1rem] shadow-md shadow-rose-200 bg-rose-900 text-white tracking-[0.3rem] z-[2] cursor-pointer"
+            style="text-shadow: 0 0 5px white;">Termin buchen</button>
+      </nav>
+      <section id="fixed-contact"
+         class="fixed w-[90%] -top-[200%] right-[50%] translate-x-[50%] pl-[7rem] p-[3rem] bg-white rounded-2xl shadow-lg text-rose-900 shadow-rose-100 grid grid-row-2 gap-y-[2rem] z-[2] transition-all duration-[0.5s] sm:right-[5%] sm:translate-x-[0] sm:w-auto overflow-scroll">
+         <article>
+            <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Kontakt | Impressum</header>
+            <section class="leading-[1.5rem]">
+               <% contacts.forEach((contact)=>{ %>
+                  <form method="post" action="/contact-save/<%= contact._id %>" id="contact-save-form" class="mb-[0.25rem] relative">
+                     <div id="edit-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                        <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+                        </svg>
+                     </div>
+                     <a href="/contact-delete/<%= contact._id %>" class="absolute -left-[5rem] top-[50%] -translate-y-[50%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                           <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                         </svg>
+                     </a>
+                     <button type="submit" id="save-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%] hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                           <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                         </svg>
+                     </button>
+                     <input type="text" value="<%= contact.contact %>" name="contact" class="w-[5rem] opacity-[30%] transition-all" disabled>:
+                     <input type="text" value="<%- contact.value %>" name="value" class="w-[15.5rem] opacity-[30%] transition-all" disabled>
+                     <input type="text" value="<%= contact.link %>" name="link" class="w-[15.5rem] opacity-[30%] transition-all" disabled>
+                  </form>
+               <% }) %>
+                  <a href="/contact-create" class="block w-fit -translate-x-[3rem]">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                  </a>
+            </section>
+         </article>
+         <article>
+            <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Unsere Öffnungszeiten</header>
+            <p class="leading-[1.5rem]">
+               Termine nur nach Vereinbarung! <br>
+               <section id="day" class="flex flex-col gap-y-[0.25rem] mt-[1rem]">
+                  <% days.forEach((day)=>{ %>
+                     <form method="post" action="/day-save/<%= day._id %>" id="day-save-form" class="flex flex-row gap-[1rem] relative">
+                        <div id="edit-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%]">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                           <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+                           </svg>
+                        </div>
+                        <a href="/day-delete/<%= day._id %>" class="absolute -left-[5rem] top-[50%] -translate-y-[50%]">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                        </a>
+                        <button type="submit" id="save-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%] hidden">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                              <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                            </svg>
+                        </button>
+                        <input type="text" value="<%= day.day %>" name="day" class="w-[7rem] opacity-[30%] transition-all" disabled>
+                        <input type="text" value="<%= day.time %>" name="time" class="w-[7rem] opacity-[30%] transition-all" disabled>
+                     </form>
+                  <% }) %>
+                  <a href="/day-create" class="block w-fit -translate-x-[3rem]">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                  </a>
+            </section>
+            </p>
+         </article>
+      </section>
+      <!-- header contact -->
+      <button id="header-contact-btn"
+         class="absolute bottom-[2rem] right-[50%] translate-x-[50%] px-[1.2rem] py-[0.4rem] rounded-2xl border-white border-[0.1rem] shadow-lg shadow-rose-200 bg-rose-900 text-white text-[2rem] tracking-[0.3rem] z-[2] cursor-pointer whitespace-nowrap sm:right-[10%] sm:translate-x-[0]"
+         style="text-shadow: 0 0 5px white;">Termin buchen</button>
+      <section id="header-contact"
+         class="absolute w-[90%] h-[70%] -bottom-[200%] right-[50%] translate-x-[50%] pl-[7rem] p-[3rem] bg-white rounded-2xl shadow-lg text-rose-900 shadow-rose-100 grid grid-cols-1 gap-y-[2rem] z-[2] transition-all duration-[0.5s] overflow-scroll sm:right-[10%] sm:translate-x-[0] lg:w-fit xl:h-auto">
+         <article>
+            <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Kontakt | Impressum</header>
+            <section class="leading-[1.5rem]">
+               <% contacts.forEach((contact)=>{ %>
+                  <form method="post" action="/contact-save/<%= contact._id %>" id="contact-save-form" class="mb-[0.25rem] relative">
+                     <div id="edit-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                        <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+                        </svg>
+                     </div>
+                     <a href="/contact-delete/<%= contact._id %>" class="absolute -left-[5rem] top-[50%] -translate-y-[50%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                           <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                         </svg>
+                     </a>
+                     <button type="submit" id="save-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%] hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                           <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                         </svg>
+                     </button>
+                     <input type="text" value="<%= contact.contact %>" name="contact" class="w-[5rem] opacity-[30%] transition-all" disabled>:
+                     <input type="text" value="<%- contact.value %>" name="value" class="w-[15.5rem] opacity-[30%] transition-all" disabled>
+                     <input type="text" value="<%= contact.link %>" name="link" class="w-[15.5rem] opacity-[30%] transition-all" disabled>
+                  </form>
+               <% }) %>
+                  <a href="/contact-create" class="block w-fit -translate-x-[3rem]">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                  </a>
+            </section>
+         </article>
+         <article>
+            <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Unsere Öffnungszeiten</header>
+            <p class="leading-[1.5rem]">
+               Termine nur nach Vereinbarung! <br>
+            <section id="day" class="flex flex-col gap-y-[0.25rem] mt-[1rem]">
+                  <% days.forEach((day)=>{ %>
+                     <form method="post" action="/day-save/<%= day._id %>" id="day-save-form" class="flex flex-row gap-[1rem] relative">
+                        <div id="edit-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%]">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                           <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+                           </svg>
+                        </div>
+                        <a href="/day-delete/<%= day._id %>" class="absolute -left-[5rem] top-[50%] -translate-y-[50%]">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                        </a>
+                        <button type="submit" id="save-btn" class="absolute -left-[3rem] top-[50%] -translate-y-[50%] hidden">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                              <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                            </svg>
+                        </button>
+                        <input type="text" value="<%= day.day %>" name="day" class="w-[7rem] opacity-[30%] transition-all" disabled>
+                        <input type="text" value="<%= day.time %>" name="time" class="w-[7rem] opacity-[30%] transition-all" disabled>
+                     </form>
+                  <% }) %>
+                  <a href="/day-create" class="block w-fit -translate-x-[3rem]">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                  </a>
+            </section>
+            </p>
+         </article>
+      </section>
+      <!-- small screen nav -->
+      <button id="ham-btn"
+         class="fixed p-[2rem] flex flex-col gap-y-[0.2rem] z-[3] *:h-[0.3rem] *:bg-rose-800 *:rounded-full *:transition-all *:duration-[0.5s] lg:hidden">
+         <div class="w-[2rem]"></div>
+         <div class="w-[1.6rem]"></div>
+      </button>
+      <section id="ham-nav"
+         class="fixed -left-[200%] top-0 h-screen bg-white flex flex-col gap-y-[4rem] pl-[2rem] pr-[4rem] pt-[7rem] shadow-2xl shadow-neutral-600 transition-all duration-[0.5s] tracking-[0.2rem] z-[2] *:inline lg:hidden">
+         <a>Willkommen</a>
+         <a>Massagen & Preise</a>
+         <a>Gutscheine & Rabatt</a>
+         <a>GALERIE</a>
+      </section>
+   </header>
+   <!-- welcome page -->
+   <h1 class="text-[2rem] text-center mt-[5rem]">Willkommen</h1>
+   <main class="grid grid-cols-1 gap-[5rem] p-[3rem] sm:p-[5rem] xl:grid-cols-2">
+      <figure class="relative h-fit">
+         <form method="post" action="/welcome-img-save" enctype="multipart/form-data" id="change-welcome-img-btn"
+            class="p-[1.5rem] bg-gray-100 rounded-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] transition-all duration-[0.2s] z-[1] overflow-hidden">
+            <input type="file" name="image" class="opacity-[0] absolute top-0 left-0 text-[10rem]"
+               onchange="this.form.submit()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="hsl(350,40%,30%)"
+               class="bi bi-brush-fill" viewBox="0 0 16 16">
+               <path
+                  d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.1 6.1 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.1 8.1 0 0 1-3.078.132 4 4 0 0 1-.562-.135 1.4 1.4 0 0 1-.466-.247.7.7 0 0 1-.204-.288.62.62 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896q.19.012.348.048c.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04" />
+            </svg>
+         </form>
+         <img src="./images/<%= pages.welcome.content.introduceImage %>" id="welcome-img"
+            class="rounded-2xl w-full h-[20rem] shadow-lg shadow-slate-400 object-center object-cover sm:h-[40rem] xl:h-auto transition-all duration-[0.1s]">
+         <figcaption class="mt-[1rem] text-center text-[2.5rem] text-red-500">Keine Erotik !!!</figcaption>
+      </figure> 
+      <article class="text-rose-950">
+         <header class="text-[2.5rem] mb-[2rem]">Sawasdee</header>
+         <form method="post" action="/welcome-text-save" id="welcome-text-save-form" class="text-[1.2rem] font-thin relative">
+            <div id="edit-btn" class="absolute right-[0] -top-[2rem] z-[1]">
+               <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+               <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+               </svg>
+            </div>
+            <button type="submit" id="save-btn" class="absolute right-[0] -top-[2rem] z-[1] hidden">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                  <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                </svg>
+            </button>
+            <textarea name="text" disabled class="w-full h-[40rem] opacity-[30%] transition-all">
+               <%- pages.welcome.content.introduceText %>
+            </textarea>
+         </form>
+      </article>
+   </main>
+   <!-- massage page -->
+   <h1 class="text-[2rem] text-center mt-[5rem]">Massagen & Preise</h1>
+   <main class="font-thin text-rose-950 p-[3rem] sm:p-[5rem]">
+      <% pages.massage.forEach((massage, index)=>{ %>
+         <form method="post" action="/massage-save/<%= massage._id %>" enctype="multipart/form-data" id="massage" class="relative flex flex-col-reverse gap-[5rem] mb-[5rem] xl:flex-row xl:even:flex-row-reverse">
+            <div id="edit-btn" class="absolute z-[1] -top-[2rem] left-[3rem] w-fit">
+               <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+               <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+               </svg>
+            </div>
+            <a href="/massage-delete/<%= massage._id %>" class="absolute z-[1] -top-[2rem] left-[0] w-fit">
+               <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                </svg>
+            </a>
+            <button type="submit" id="save-btn" class="absolute z-[1] -top-[2rem] left-[3rem]hidden w-fit">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                  <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                </svg>
+            </button>
+            <main class="xl:w-[50%]">
+               <header class="text-[2.4rem] text-center mb-[0.5rem]">
+                  <input type="text" name="head" value="<%= massage.name %>" disabled class="opacity-[30%]">
+               </header>
+               <article class="text-[1.2rem] mb-[1rem]">
+                  <textarea name="detail" disabled class="w-full h-[15rem] opacity-[30%]"><%- massage.detail %></textarea>
+               </article>
+               <ul type="none" id="price-time" class="relative flex flex-row w-fit
+                  <% if(index % 2 == 0){ %>
+                     justify-end
+                  <% }else{ %>
+                     justify-start
+                  <% } %>
+                   pt-[1rem] gap-x-[1rem]">
+                   <div class="absolute -right-[2rem] top-[50%] hidden" id="add-package-btn">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                      </svg>
+                   </div>
+                  <% massage.package.forEach((package)=>{ %>
+                     <li class="flex flex-col gap-y-[0.25rem] font-normal relative">
+                        <div class="absolute -top-[1.5rem] hidden" id="delete-package-btn">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                        </div>
+                        <input type="text" name="min" value="<%= package.min %>" class="w-[6rem]" disabled class="opacity-[30%]">
+                        <input type="text" name="price" value="<%= package.price %>" class="w-[6rem]" disabled class="opacity-[30%]">
+                     </li>
+                     <% }) %>
+               </ul>
+            </main>
+            <figure class="relative size-fit xl:w-[50%] mx-auto" id="change-massage-image-section">
+               <section id="change-massage-img-btn" class="p-[1.5rem] bg-gray-100 rounded-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] transition-all duration-[0.2s] z-[1] overflow-hidden">
+                  <input type="file" name="image" id="massage-img-input" class="opacity-[0] absolute top-0 left-0 text-[10rem]" disabled class="opacity-[30%]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="hsl(350,40%,30%)"
+                     class="bi bi-brush-fill" viewBox="0 0 16 16">
+                     <path
+                        d="M15.825.12a.5.5 0 0 1 .132.584c-1.53 3.43-4.743 8.17-7.095 10.64a6.1 6.1 0 0 1-2.373 1.534c-.018.227-.06.538-.16.868-.201.659-.667 1.479-1.708 1.74a8.1 8.1 0 0 1-3.078.132 4 4 0 0 1-.562-.135 1.4 1.4 0 0 1-.466-.247.7.7 0 0 1-.204-.288.62.62 0 0 1 .004-.443c.095-.245.316-.38.461-.452.394-.197.625-.453.867-.826.095-.144.184-.297.287-.472l.117-.198c.151-.255.326-.54.546-.848.528-.739 1.201-.925 1.746-.896q.19.012.348.048c.062-.172.142-.38.238-.608.261-.619.658-1.419 1.187-2.069 2.176-2.67 6.18-6.206 9.117-8.104a.5.5 0 0 1 .596.04" />
+                  </svg>
+               </section>
+               <img src="/images/<%= massage.image %>" id="massage-img" class="h-[20rem] w-[50rem] shadow-xl object-cover object-center transition-all">
+            </figure>
+         </form>
+      <% }) %>
+      <a href="/massage-create" class="flex flex-row justify-center items-center">
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+          </svg>
+      </a>
+   </main>
+   <!-- discount page -->
+   <h1 class="text-[2rem] text-center mt-[5rem] mb-[3rem]">Gutscheine & Rabatt</h1>
+   <main class="flex flex-col">
+      <main class="flex flex-row p-[0.5rem] gap-x-[0.5rem]" id="discount-images">
+         <% pages.discount.content.image.forEach((image, index)=>{ %>
+            <figure class="w-full">
+               <img src="/images/<%= image %>" class="w-full">
+               <a href="/discount-img-delete/<%= index %>" class="absolute top-[1rem] right-[1rem] bg-white p-[0.5rem] rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                   </svg>
+               </a>
+            </figure>
+         <% }) %>
+      </main>
+      <form method="post" action="/discount-img-save" enctype="multipart/form-data" class="relative w-full p-[0.5rem]">
+         <div class="p-[1.5rem] bg-gray-100 rounded-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] transition-all duration-[0.2s] z-[1] overflow-hidden">
+            <input type="file" name="image" onchange="this.form.submit()" class="opacity-[0] absolute -bottom-[2rem] left-[50%] -translate-x-[50%] text-[10rem]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+               <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+             </svg>
+         </div>
+         <div class="h-[15rem] w-full"></div>
+      </form>
+      <article class="grid grid-cols-1 gap-[2rem] p-[3rem] sm:p-[5rem] sm:grid-cols-2">
+         <% pages.discount.content.text.forEach((text,index)=>{ %>
+               <form method="post" action="/discount-text-save/<%= index %>" id="discount-form" class="relative">
+                  <a href="discount-text-delete/<%= index %>" class="absolute right-[6rem] top-0">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                      </svg>
+                  </a>
+                  <div id="edit-btn" class="absolute right-[3rem] top-[0]">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" fill="currentColor" class="bi bi-feather" viewBox="0 0 16 16">
+                     <path d="M15.807.531c-.174-.177-.41-.289-.64-.363a3.8 3.8 0 0 0-.833-.15c-.62-.049-1.394 0-2.252.175C10.365.545 8.264 1.415 6.315 3.1S3.147 6.824 2.557 8.523c-.294.847-.44 1.634-.429 2.268.005.316.05.62.154.88q.025.061.056.122A68 68 0 0 0 .08 15.198a.53.53 0 0 0 .157.72.504.504 0 0 0 .705-.16 68 68 0 0 1 2.158-3.26c.285.141.616.195.958.182.513-.02 1.098-.188 1.723-.49 1.25-.605 2.744-1.787 4.303-3.642l1.518-1.55a.53.53 0 0 0 0-.739l-.729-.744 1.311.209a.5.5 0 0 0 .443-.15l.663-.684c.663-.68 1.292-1.325 1.763-1.892.314-.378.585-.752.754-1.107.163-.345.278-.773.112-1.188a.5.5 0 0 0-.112-.172M3.733 11.62C5.385 9.374 7.24 7.215 9.309 5.394l1.21 1.234-1.171 1.196-.027.03c-1.5 1.789-2.891 2.867-3.977 3.393-.544.263-.99.378-1.324.39a1.3 1.3 0 0 1-.287-.018Zm6.769-7.22c1.31-1.028 2.7-1.914 4.172-2.6a7 7 0 0 1-.4.523c-.442.533-1.028 1.134-1.681 1.804l-.51.524zm3.346-3.357C9.594 3.147 6.045 6.8 3.149 10.678c.007-.464.121-1.086.37-1.806.533-1.535 1.65-3.415 3.455-4.976 1.807-1.561 3.746-2.36 5.31-2.68a8 8 0 0 1 1.564-.173"/>
+                     </svg>
+                  </div>
+                  <button type="submit" id="save-btn" class="absolute right-[3rem] top-[0] hidden">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                        <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+                      </svg>
+                  </button>
+                  <header class="mb-[1rem] text-[1.5rem] font-semibold text-rose-900">
+                    <input type="text" name="head" value="<%= text.header %>" disabled class="opacity-[30%]">
+                  </header>
+                  <textarea name="content" cols="60" rows="7" disabled class="opacity-[30%]"><%= text.content %></textarea>
+               </form>
+               <% }) %>
+      </article>
+            <a href="discount-text-create" class="mx-auto">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+            </a>
+   </main>
+   <!-- gallery page -->
+   <h1 class="text-[2rem] text-center mt-[5rem] mb-[3rem]">GALERIE</h1>
+   <main id="gallery-images" class="w-full flex flex-col gap-[0.25rem] p-[0.25rem] sm:flex-row *:gap-y-[0.25rem]">
+      <% pages.gallery.content.image.forEach((image, index)=>{ %>
+         <figure id="gallery-image" class="relative">
+            <img src="/images/<%= image %>" class="w-full">
+            <a href="/gallery-img-delete/<%= index %>" class="absolute top-[1rem] right-[1rem] bg-white p-[0.5rem] rounded-full">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                </svg>
+            </a>
+         </figure>
+         <% }) %>
+   </main>
+   <form method="post" action="/gallery-img-save" enctype="multipart/form-data" class="relative w-full p-[0.5rem]">
+         <div class="p-[1.5rem] bg-gray-100 rounded-full absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] transition-all duration-[0.2s] z-[1] overflow-hidden">
+            <input type="file" name="image" onchange="this.form.submit()" class="opacity-[0] absolute -bottom-[2rem] left-[50%] -translate-x-[50%] text-[10rem]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+               <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+             </svg>
+         </div>
+         <div class="h-[15rem] w-full"></div>
+   </form>
+   <script src="script.js"></script>
+   <script src="admin.js"></script>
+</body>
+
+</html>

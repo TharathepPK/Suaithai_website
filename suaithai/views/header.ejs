@@ -1,0 +1,98 @@
+<header class="w-screen h-screen overflow-hidden relative">
+   <figure class="absolute size-full">
+      <img src="./images/<%= background %>" id="header-background" class="size-full object-cover object-center transition-all duration-[2s]">
+   </figure>
+   <section class="absolute flex flex-col items-center z-[1] size-fit right-[50%] top-[50%] translate-x-[50%] -translate-y-[50%] xl:translate-x-[0%] xl:right-[10%]">
+      <img src="./images/suai-logo.png" class=" h-[12rem]">
+      <p class="text-white text-[1.6rem] font-thin">Thai Massage & Spa</p>
+   </section>
+   <section class="absolute size-full z-[1]">
+      <img src="./images/cloud-top.png" id="cloud-top" class="absolute w-full h-[10rem] object-cover top-0">
+      <img src="./images/cloud-bottom.png" id="cloud-bottom" class="absolute w-full h-[15rem] object-cover object-left bottom-0 lg:h-[10rem] lg:min-w-[100%] lg:object-fill">
+   </section>
+   <section id="bubble" class=" absolute size-full">
+   </section>
+   <nav id="header-nav" class="absolute top-[2.5rem] w-full hidden flex-row justify-around z-[2] text-rose-900 text-[1rem] tracking-[0.3rem] *:cursor-pointer lg:flex">
+   <a href="">Willkommen</a>
+         <a href="">Massagen & Preise</a>
+         <a href="">Gutscheine & Rabatt</a>
+         <a href="">GALERIE</a>
+      </nav>
+   <nav id="fixed-nav" class="fixed -top-[100%] w-full py-[1.5rem] px-[5%] hidden flex-row justify-between items-center bg-white border-b-rose-800 border-b-[0.1rem] rounded-b-xl text-rose-900 tracking-[0.1rem] transition-all duration-[0.5s] z-[3] *:cursor-pointer lg:flex xl:tracking-[0.3rem]">
+      <a href="">Willkommen</a>
+      <a href="">Massagen & Preise</a>
+      <a href="">Gutscheine & Rabatt</a>
+      <a href="">GALERIE</a>
+   <!-- fixed contact -->
+      <button id="fixed-contact-btn" class="px-[0.6rem] py-[0.2rem] rounded-xl border-white border-[0.1rem] shadow-md shadow-rose-200 bg-rose-900 text-white tracking-[0.3rem] z-[2] cursor-pointer" style="text-shadow: 0 0 5px white;">Termin buchen</button>
+   </nav>
+   <section id="fixed-contact" class="fixed w-[90%] -top-[200%] right-[50%] translate-x-[50%] p-[3rem] bg-white rounded-2xl shadow-lg text-rose-900 shadow-rose-100 grid grid-row-2 gap-y-[2rem] z-[2] transition-all duration-[0.5s] sm:right-[5%] sm:translate-x-[0] sm:w-auto">
+      <article>
+         <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Kontakt | Impressum</header>
+         <p class="leading-[1.5rem]">
+            <% contacts.forEach((contact)=>{ %>
+                  <%= contact.contact %>: <a href="<%= contact.link %>" target="_blank" id="contact-link" class="underline underline-offset-2 cursor-pointer"><%= contact.value %></a><br>
+            <% }) %>
+         </p>
+      </article>
+      <article>
+         <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Unsere Öffnungszeiten</header>
+         <p class="leading-[1.5rem]">
+            Termine nur nach Vereinbarung! <br>
+            <section class="inline-grid grid-cols-2 gap-x-[2rem]">
+               <ul>
+                  <% days.forEach((day)=>{ %>
+                     <li><%= day.day %><li>
+                  <% }) %>
+               </ul>
+               <ul>
+                  <% days.forEach((day)=>{ %>
+                     <li><%= day.time %></li>
+                  <% }) %>
+               </ul>
+            </section>
+         </p>
+      </article>
+   </section>
+   <!-- header contact -->
+   <button id="header-contact-btn" class="absolute bottom-[2rem] right-[50%] translate-x-[50%] px-[1.2rem] py-[0.4rem] rounded-2xl border-white border-[0.1rem] shadow-lg shadow-rose-200 bg-rose-900 text-white text-[2rem] tracking-[0.3rem] z-[2] cursor-pointer whitespace-nowrap sm:right-[10%] sm:translate-x-[0]" style="text-shadow: 0 0 5px white;">Termin buchen</button>
+   <section id="header-contact" class="absolute w-[90%] -bottom-[200%] right-[50%] translate-x-[50%] p-[3rem] bg-white rounded-2xl shadow-lg text-rose-900 shadow-rose-100 grid grid-row-2 gap-y-[2rem] z-[2] transition-all duration-[0.5s] sm:right-[10%] sm:translate-x-[0] sm:w-auto">
+      <article>
+         <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Kontakt | Impressum</header>
+         <p class="leading-[1.5rem]">
+            <% contacts.forEach((contact)=>{ %>
+               <%= contact.contact %>: <a href="<%= contact.link %>" target="_blank" id="contact-link" class="underline underline-offset-2 cursor-pointer"><%= contact.value %></a><br>
+            <% }) %>
+         </p>
+      </article>
+      <article>
+         <header class="text-[1.5rem] font-semibold mb-[0.5rem] tracking-[0.2rem]">Unsere Öffnungszeiten</header>
+         <p class="leading-[1.5rem]">
+            Termine nur nach Vereinbarung! <br>
+            <section class="inline-grid grid-cols-2 gap-x-[2rem]">
+               <ul>
+                  <% days.forEach((day)=>{ %>
+                     <li><%= day.day %><li>
+                  <% }) %>
+               </ul>
+               <ul>
+                  <% days.forEach((day)=>{ %>
+                     <li><%= day.time %></li>
+                  <% }) %>
+               </ul>
+            </section>
+         </p>
+      </article>
+   </section>
+   <!-- small screen nav -->
+   <button id="ham-btn" class="fixed p-[2rem] flex flex-col gap-y-[0.2rem] z-[3] *:h-[0.3rem] *:bg-rose-800 *:rounded-full *:transition-all *:duration-[0.5s] lg:hidden">
+      <div class="w-[2rem]"></div>
+      <div class="w-[1.6rem]"></div>
+   </button>
+   <section id="ham-nav" class="fixed -left-[200%] top-0 h-screen bg-white flex flex-col gap-y-[4rem] pl-[2rem] pr-[4rem] pt-[7rem] shadow-2xl shadow-neutral-600 transition-all duration-[0.5s] tracking-[0.2rem] z-[2] *:cursor-pointer *:inline lg:hidden">
+      <a href="">Willkommen</a>
+      <a href="">Massagen & Preise</a>
+      <a href="">Gutscheine & Rabatt</a>
+      <a href="">GALERIE</a>
+   </section>
+</header>

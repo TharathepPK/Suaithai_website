@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include("head.ejs") %>
+</head>
+<body>
+   <%- include("header.ejs") %>
+   <main class="flex flex-col">
+      <section class="flex flex-row p-[0.5rem] gap-x-[0.5rem]" id="discount-images">
+         <% content.image.forEach((img)=>{ %>
+            <figure>
+               <img src="/images/<%= img %>" class="w-full">
+            </figure>
+         <% }) %>
+      </section>
+      <article class="grid grid-cols-1 gap-[2rem] p-[3rem] sm:p-[5rem] sm:grid-cols-2">
+         <% content.text.forEach((text)=>{ %>
+            <main>
+               <header class="mb-[1rem] text-[1.5rem] font-semibold text-rose-900"><%= text.header %></header>
+               <p class="text-rose-950"><%= text.content %></p>
+            </main>
+         <% }) %>
+      </article>
+   </main>
+   <%- include("footer.ejs") %>
+   <script src="script.js"></script>
+   <script src="page.js"></script>
+</body>
+</html>

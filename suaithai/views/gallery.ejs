@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include("head.ejs") %>
+</head>
+<body>
+   <%- include("header.ejs") %>
+   <main id="gallery-images" class="w-full flex flex-col gap-[0.25rem] p-[0.25rem] sm:flex-row *:gap-y-[0.25rem]">
+      <% content.image.forEach((image)=>{ %>
+         <img src="/images/<%= image %>" id="gallery-image" class="w-full relative">
+      <% }) %>
+   </main>
+   <%- include("footer.ejs") %>
+   <script src="script.js"></script>
+   <script src="page.js"></script>
+</body>
+</html>
